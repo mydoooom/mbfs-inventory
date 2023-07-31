@@ -15,9 +15,14 @@ export default function CarsList({ cars }: Props) {
 
   return (
     <>
-      {carsList && carsList.map(car => (
-        <h1>{car.brand}</h1>
-      ))}
+      {!carsList
+        ? <p>Loading</p>
+        : carsList.length === 0
+          ? <p>There are no cars</p>
+          : carsList.map(car => (
+            <h1>{car.brand}</h1>
+          ))
+      }
     </>
   )
 }
