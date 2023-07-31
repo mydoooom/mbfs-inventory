@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { Card, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
+import { Card, Flex, IconButton, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import type { cars as car } from '@prisma/client'
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 
 
 interface Props {
@@ -16,8 +17,14 @@ export default function CarsList ({ cars }: Props) {
     setCarsList(cars)
   }, [])
 
-  const handleChangeRoute = (id: number) => {
-    router.push(`/${id}`)
+  const handleChangeRoute = (id: number, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
+    const target = event.target as HTMLElement
+
+    if(!target.innerText) {
+      return
+    } else {
+      router.push(`/${id}`)
+    }
   }
 
   return (
@@ -42,12 +49,21 @@ export default function CarsList ({ cars }: Props) {
                   </Thead>
                   <Tbody>
                     {carsList.map(car => (
-                      <Tr key={car.id} cursor={'pointer'} onClick={() => handleChangeRoute(car.id)}>
+                      <Tr
+                        key={car.id}
+                        cursor={'pointer'}
+                        onClick={(event) => handleChangeRoute(car.id, event)}>
                         <Td>{car.brand}</Td>
                         <Td>{car.model_name}</Td>
                         <Td>{car.fuel}</Td>
                         <Td>{car.color}</Td>
                         <Td>{car.price_czk} CZK</Td>
+                        <Td id={'editAndDeleteBtns'}>
+                          <Flex gap={'1'}>
+                            <IconButton aria-label={'Edit'} icon={<EditIcon />} />
+                            <IconButton aria-label={'Delete'} icon={<DeleteIcon />} />
+                          </Flex>
+                        </Td>
                       </Tr>
                     ))}
                   </Tbody>
