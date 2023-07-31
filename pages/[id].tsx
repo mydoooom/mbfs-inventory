@@ -1,4 +1,6 @@
+import { Container } from '@chakra-ui/react'
 import { GetStaticProps } from 'next'
+import CarDetail from '../components/CarDetail'
 import getCar from './api/getCar'
 import { getAllCarIds } from './api/getCars'
 import { cars as car } from '.prisma/client'
@@ -6,14 +8,16 @@ import { cars as car } from '.prisma/client'
 interface Props {
   car: car
 }
-export default function Car({car}: Props) {
-  console.log(car)
+
+export default function Car ({ car }: Props) {
   return (
-    <h1>{car.brand}</h1>
+    <Container maxWidth={'100%'}>
+      <CarDetail car={car} />
+    </Container>
   )
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths () {
   const paths = await getAllCarIds();
   return {
     paths,
@@ -23,7 +27,7 @@ export async function getStaticPaths() {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const car = await getCar(+context.params!.id!)
-  console.log(car)
+
   return {
     props: {
       car
