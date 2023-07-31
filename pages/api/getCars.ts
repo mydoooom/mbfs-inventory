@@ -1,11 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../prisma/client'
 import type { cars as car } from '@prisma/client'
 
-export default async function getCars (
-  req?: NextApiRequest,
-  res?: NextApiResponse
-) {
+export default async function getCars () {
   let cars: car[]
 
   try {
