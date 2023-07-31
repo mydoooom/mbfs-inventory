@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
-import type { cars } from '@prisma/client'
+import type { cars as car } from '@prisma/client'
 
 
 interface Props {
-  cars?: cars[]
+  cars?: car[]
 }
 
 export default function CarsList ({ cars }: Props) {
-  const [carsList, setCarsList] = useState<cars[]>()
+  const [carsList, setCarsList] = useState<car[]>()
 
   useEffect(() => {
     setCarsList(cars)
