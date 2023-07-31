@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { Card, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import type { cars as car } from '@prisma/client'
@@ -8,11 +9,16 @@ interface Props {
 }
 
 export default function CarsList ({ cars }: Props) {
+  const router = useRouter()
   const [carsList, setCarsList] = useState<car[]>()
 
   useEffect(() => {
     setCarsList(cars)
   }, [])
+
+  const handleChangeRoute = (id: number) => {
+    router.push(`/${id}`)
+  }
 
   return (
     <>
@@ -36,7 +42,7 @@ export default function CarsList ({ cars }: Props) {
                   </Thead>
                   <Tbody>
                     {carsList.map(car => (
-                      <Tr key={car.id}>
+                      <Tr key={car.id} cursor={'pointer'} onClick={() => handleChangeRoute(car.id)}>
                         <Td>{car.brand}</Td>
                         <Td>{car.model_name}</Td>
                         <Td>{car.fuel}</Td>
