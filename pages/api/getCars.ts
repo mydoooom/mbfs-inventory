@@ -1,7 +1,7 @@
 import { prisma } from '../../prisma/client'
 import type { cars as car } from '@prisma/client'
 
-export default async function getCars () {
+export async function getCars() {
   let cars: car[]
 
   try {
@@ -11,5 +11,20 @@ export default async function getCars () {
   } catch (err) {
     console.error(err)
   }
+}
 
+export async function getAllCarIds() {
+  const carIds = await prisma.cars.findMany({
+    select: {
+      id: true
+    }
+  })
+
+  return carIds.map(car => {
+    return {
+      params: {
+        id: car.id.toString()
+      }
+    }
+  })
 }
