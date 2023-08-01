@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     })
 
-    res.json(car)
+    res.status(200).send('Succesfully deleted a car')
   } else {
     console.log(`Car with ID ${carId} does not exist.`)
   }
