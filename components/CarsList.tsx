@@ -27,6 +27,10 @@ export default function CarsList ({ cars }: Props) {
     }
   }
 
+  const handleEdit = (id: number) => {
+    void router.push(`/edit/${id}`)
+  }
+
   const handleDelete = async (id: number) => {
     try {
       const response = await fetch(`/api/${id}`, {
@@ -73,7 +77,10 @@ export default function CarsList ({ cars }: Props) {
                         <Td>{car.price_czk} CZK</Td>
                         <Td id={'editAndDeleteBtns'}>
                           <Flex gap={'1'}>
-                            <IconButton aria-label={'Edit'} icon={<EditIcon />} />
+                            <IconButton
+                              onClick={() => handleEdit(car.id)}
+                              aria-label={'Edit'}
+                              icon={<EditIcon />} />
                             <IconButton
                               onClick={() => handleDelete(car.id)}
                               aria-label={'Delete'}

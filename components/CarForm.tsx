@@ -14,7 +14,10 @@ import {
 import { cars as car } from '@prisma/client'
 
 
-export default function CarForm() {
+interface Props {
+  editMode: boolean
+}
+export default function CarForm({ editMode }: Props) {
   const router = useRouter()
   const {
     register,
