@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import {
   Button,
@@ -10,19 +11,48 @@ import {
   HStack,
   Input, Spacer
 } from '@chakra-ui/react'
+import { cars as car } from '@prisma/client'
 
 
 export default function CarForm() {
+  const router = useRouter()
   const {
     register,
-    watch,
     handleSubmit,
     formState: { errors }
-  } = useForm({
+  } = useForm<car>({
     mode: 'onTouched'
   })
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = async (data: car) => {
+    const newCar: car = {
+      ...data,
+      model_year: +data.model_year.toString().trim(),
+      engine_displacement: +data.engine_displacement
+        .toString()
+        .trim()
+        .replaceAll(',', '.')
+        .replaceAll(' ', ''),
+      price_czk: +data.price_czk
+        .toString()
+        .trim()
+        .replaceAll(',', '.')
+        .replaceAll(' ', '')
+    }
+    try {
+      await fetch('/api/new', {
+        body: JSON.stringify(newCar),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST'
+      })
+
+      void router.push('/')
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   console.log(errors)
   return (
@@ -43,31 +73,31 @@ export default function CarForm() {
               </Input>
               {errors.brand && <FormErrorMessage>Brand name is required</FormErrorMessage>}
             </FormControl>
-            <FormControl isInvalid={!!errors.model}>
+            <FormControl isInvalid={!!errors.model_name}>
               <FormLabel>Model</FormLabel>
               <Input
                 type={'text'}
                 placeholder={'e.g. S-Class'}
-                {...register('model', { required: true })}
+                {...register('model_name', { required: true })}
               >
               </Input>
-              {errors.model && <FormErrorMessage>Model name is required</FormErrorMessage>}
+              {errors.model_name && <FormErrorMessage>Model name is required</FormErrorMessage>}
             </FormControl>
           </HStack>
           <HStack mb={'4'}>
-            <FormControl isInvalid={!!errors.priceCZK}>
+            <FormControl isInvalid={!!errors.price_czk}>
               <FormLabel>Price</FormLabel>
               <Input
                 type={'text'}
                 placeholder={'Price in CZK'}
-                {...register('priceCZK', {
+                {...register('price_czk', {
                   required: true,
                   pattern: /^[0-9]+$/
                 })}
               >
               </Input>
-              {errors.priceCZK?.type === 'pattern' && <FormErrorMessage>Should be a number</FormErrorMessage>}
-              {errors.priceCZK?.type === 'required' && <FormErrorMessage>Price is required</FormErrorMessage>}
+              {errors.price_czk?.type === 'pattern' && <FormErrorMessage>Should be a number</FormErrorMessage>}
+              {errors.price_czk?.type === 'required' && <FormErrorMessage>Price is required</FormErrorMessage>}
             </FormControl>
             <FormControl isInvalid={!!errors.color}>
               <FormLabel>Color</FormLabel>
@@ -79,45 +109,45 @@ export default function CarForm() {
               </Input>
               {errors.color && <FormErrorMessage>Color is required</FormErrorMessage>}
             </FormControl>
-            <FormControl isInvalid={!!errors.modelYear}>
+            <FormControl isInvalid={!!errors.model_year}>
               <FormLabel>Model Year</FormLabel>
               <Input
                 type={'text'}
                 placeholder={'e.g. 2022'}
-                {...register('modelYear', {
+                {...register('model_year', {
                   required: true,
                   pattern: /^[0-9]+$/
                 })}
               >
               </Input>
-              {errors.modelYear?.type === 'pattern' && <FormErrorMessage>Should be a number</FormErrorMessage>}
-              {errors.modelYear?.type === 'required' && <FormErrorMessage>Price is required</FormErrorMessage>}
+              {errors.model_year?.type === 'pattern' && <FormErrorMessage>Should be a number</FormErrorMessage>}
+              {errors.model_year?.type === 'required' && <FormErrorMessage>Price is required</FormErrorMessage>}
             </FormControl>
           </HStack>
           <HStack mb={'4'}>
-            <FormControl isInvalid={!!errors.fuelType}>
+            <FormControl isInvalid={!!errors.fuel}>
               <FormLabel>Fuel Type</FormLabel>
               <Input
                 type={'text'}
                 placeholder={'e.g. diesel'}
-                {...register('fuelType', { required: true })}
+                {...register('fuel', { required: true })}
               >
               </Input>
-              {errors.fuelType && <FormErrorMessage>Fuel type is required</FormErrorMessage>}
+              {errors.fuel && <FormErrorMessage>Fuel type is required</FormErrorMessage>}
             </FormControl>
-            <FormControl isInvalid={!!errors.engineDisplacement}>
+            <FormControl isInvalid={!!errors.engine_displacement}>
               <FormLabel>Engine Displacement in Liters</FormLabel>
               <Input
                 type={'text'}
                 placeholder={'e.g. 1.9'}
-                {...register('engineDisplacement', {
+                {...register('engine_displacement', {
                   required: true,
                   pattern: /(\d*\.|,\d+|\d+\.|,\d*|\d+)/
                 })}
               >
               </Input>
-              {errors.engineDisplacement?.type === 'pattern' && <FormErrorMessage>Should be a number</FormErrorMessage>}
-              {errors.engineDisplacement?.type === 'required' && <FormErrorMessage>Engine displacement is required</FormErrorMessage>}
+              {errors.engine_displacement?.type === 'pattern' && <FormErrorMessage>Should be a number</FormErrorMessage>}
+              {errors.engine_displacement?.type === 'required' && <FormErrorMessage>Engine displacement is required</FormErrorMessage>}
             </FormControl>
           </HStack>
           <HStack>
