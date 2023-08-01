@@ -1,5 +1,5 @@
 import { Container } from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import CarDetail from '../components/CarDetail'
 import getCar from '../api/getCar'
 import { getAllCarIds } from '../api/getCars'
@@ -18,20 +18,28 @@ export default function Car ({ car }: Props) {
   )
 }
 
-export async function getStaticPaths () {
+export const getStaticPaths: GetStaticPaths = async () => {
   const paths = await getAllCarIds();
   return {
     paths,
-    fallback: false,
+    fallback: "blocking",
+
   };
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const car = await getCar(+context.params!.id!)
+
+  if(!car){
+    return {
+      notFound: true
+    }
+  }
 
   return {
     props: {
       car
-    }
+    },
+    revalidate: true
   }
 }

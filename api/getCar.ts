@@ -2,10 +2,8 @@ import { prisma } from '../prisma/client'
 import type { cars as car } from '@prisma/client'
 
 export default async function getCar(id: number) {
-  let car: car | null
-
   try {
-    car = await prisma.cars.findUnique({
+    let car = await prisma.cars.findUnique({
       where: {
         id: id
       }

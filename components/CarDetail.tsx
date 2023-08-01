@@ -57,7 +57,7 @@ export default function CarDetail ({ car }: Props) {
     <>
       <Card maxW={'6xl'} overflow='hidden' variant={'outline'} direction={{ base: 'column', md: 'row' }}>
         <Image
-          src={car.photo as string | undefined}
+          src={car.photo ?? undefined}
           alt={`${car.brand} ${car.model_name}`}
           objectFit={'cover'}
           maxW={{ base: '100%', md: '500px' }}

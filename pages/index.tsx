@@ -1,6 +1,8 @@
-import { Container } from '@chakra-ui/react'
-import { InferGetStaticPropsType } from 'next'
+import { AddIcon } from '@chakra-ui/icons'
+import { Button, Container } from '@chakra-ui/react'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
+import Link from 'next/link'
 import { getCars } from '../api/getCars'
 import CarsList from '../components/CarsList'
 import styles from '../styles/Home.module.css'
@@ -27,12 +29,13 @@ export default function Home ({ cars }: InferGetStaticPropsType<typeof getStatic
   )
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const cars = await getCars()
 
   return {
     props: {
       cars
-    }
+    },
+    revalidate: true // TODO nějakej čas
   }
 }

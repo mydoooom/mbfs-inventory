@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../prisma/client'
 
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-
   const carId = req.query.id!
 
   if (req.method === 'DELETE') {
