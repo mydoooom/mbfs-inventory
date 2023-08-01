@@ -19,6 +19,9 @@ export default function Home({
       </Head>
       <main className={styles.main}>
         <Container maxWidth={'100%'}>
+          <Button colorScheme={'teal'} my={'4'}>
+            <Link href={'/create'}>New Car</Link>
+          </Button>
           <CarsList cars={cars}/>
         </Container>
       </main>
