@@ -5,6 +5,7 @@ import getCar from './api/getCar'
 import { getAllCarIds } from './api/getCars'
 import { cars as car } from '.prisma/client'
 
+
 interface Props {
   car: car
 }
