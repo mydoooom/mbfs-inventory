@@ -1,9 +1,14 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import { Button, Container, Heading, Text } from '@chakra-ui/react'
+import { Button, Container, Heading } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { ReactNode } from 'react'
 
-export default function Layout({ children }) {
+type Props = {
+  children: ReactNode
+}
+
+export default function Layout({ children }: Props) {
   const router = useRouter()
 
   return (
