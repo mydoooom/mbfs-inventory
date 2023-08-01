@@ -5,6 +5,7 @@ import { getCars } from './api/getCars'
 import CarsList from '../components/CarsList'
 import styles from '../styles/Home.module.css'
 
+
 export default function Home({
   cars
 }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -18,7 +19,7 @@ export default function Home({
       </Head>
       <main className={styles.main}>
         <Container maxWidth={'100%'}>
-          <CarsList cars={cars} />
+          <CarsList cars={cars}/>
         </Container>
       </main>
     </>

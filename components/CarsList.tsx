@@ -23,7 +23,20 @@ export default function CarsList ({ cars }: Props) {
     if(!target.innerText) {
       return
     } else {
-      router.push(`/${id}`)
+      void router.push(`/${id}`)
+    }
+  }
+
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await fetch(`/api/${id}`, {
+        method: 'DELETE'
+      })
+      const data = await response.json()
+      console.log(data)
+      router.reload()
+    } catch (err) {
+      console.error(err)
     }
   }
 
@@ -61,7 +74,11 @@ export default function CarsList ({ cars }: Props) {
                         <Td id={'editAndDeleteBtns'}>
                           <Flex gap={'1'}>
                             <IconButton aria-label={'Edit'} icon={<EditIcon />} />
-                            <IconButton aria-label={'Delete'} icon={<DeleteIcon />} />
+                            <IconButton
+                              onClick={() => handleDelete(car.id)}
+                              aria-label={'Delete'}
+                              icon={<DeleteIcon />}
+                            />
                           </Flex>
                         </Td>
                       </Tr>
