@@ -1,8 +1,8 @@
 import { Container } from '@chakra-ui/react'
 import { GetStaticProps } from 'next'
 import CarDetail from '../components/CarDetail'
-import getCar from './api/getCar'
-import { getAllCarIds } from './api/getCars'
+import getCar from '../api/getCar'
+import { getAllCarIds } from '../api/getCars'
 import { cars as car } from '.prisma/client'
 
 

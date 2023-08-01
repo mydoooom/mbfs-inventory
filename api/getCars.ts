@@ -1,4 +1,4 @@
-import { prisma } from '../../prisma/client'
+import { prisma } from '../prisma/client'
 import type { cars as car } from '@prisma/client'
 
 export async function getCars() {

@@ -1,7 +1,7 @@
 import { Container } from '@chakra-ui/react'
 import { InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
-import { getCars } from './api/getCars'
+import { getCars } from '../api/getCars'
 import CarsList from '../components/CarsList'
 import styles from '../styles/Home.module.css'
 
