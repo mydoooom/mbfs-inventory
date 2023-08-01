@@ -1,6 +1,18 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { Card, Flex, IconButton, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
+import {
+  Card,
+  Flex,
+  IconButton,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react'
 import type { cars as car } from '@prisma/client'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 
@@ -20,7 +32,7 @@ export default function CarsList ({ cars }: Props) {
   const handleChangeRoute = (id: number, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
     const target = event.target as HTMLElement
 
-    if(!target.innerText) {
+    if (!target.innerText) {
       return
     } else {
       void router.push(`/${id}`)
@@ -33,7 +45,7 @@ export default function CarsList ({ cars }: Props) {
 
   const handleDelete = async (id: number) => {
     try {
-      const response = await fetch(`/api/${id}`, {
+      await fetch(`/api/${id}`, {
         method: 'DELETE'
       })
       router.reload()
@@ -79,12 +91,12 @@ export default function CarsList ({ cars }: Props) {
                               colorScheme={'yellow'}
                               onClick={() => handleEdit(car.id)}
                               aria-label={'Edit'}
-                              icon={<EditIcon />} />
+                              icon={<EditIcon/>}/>
                             <IconButton
                               colorScheme={'red'}
                               onClick={() => handleDelete(car.id)}
                               aria-label={'Delete'}
-                              icon={<DeleteIcon />}
+                              icon={<DeleteIcon/>}
                             />
                           </Flex>
                         </Td>

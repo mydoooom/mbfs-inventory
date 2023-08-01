@@ -57,7 +57,6 @@ export default function CarForm({ editMode }: Props) {
     }
   }
 
-  console.log(errors)
   return (
     <Card variant={'outline'} maxW={'2xl'}>
       <CardHeader>
@@ -156,7 +155,7 @@ export default function CarForm({ editMode }: Props) {
           <HStack>
             <Spacer></Spacer>
             <Button type={'submit'} colorScheme='teal'>Submit</Button>
-            <Button>Cancel</Button>
+            <Button onClick={() => router.push('/')}>Cancel</Button>
           </HStack>
         </form>
       </CardBody>
