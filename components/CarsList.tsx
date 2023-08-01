@@ -36,8 +36,6 @@ export default function CarsList ({ cars }: Props) {
       const response = await fetch(`/api/${id}`, {
         method: 'DELETE'
       })
-      const data = await response.json()
-      console.log(data)
       router.reload()
     } catch (err) {
       console.error(err)
@@ -53,7 +51,7 @@ export default function CarsList ({ cars }: Props) {
           : (
             <Card variant={'outline'}>
               <TableContainer>
-                <Table variant={'striped'}>
+                <Table variant={'striped'} size={'sm'}>
                   <TableCaption>List of cars available</TableCaption>
                   <Thead>
                     <Tr>
@@ -65,7 +63,7 @@ export default function CarsList ({ cars }: Props) {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {carsList.map(car => (
+                    {carsList.reverse().map(car => (
                       <Tr
                         key={car.id}
                         cursor={'pointer'}
@@ -78,10 +76,12 @@ export default function CarsList ({ cars }: Props) {
                         <Td id={'editAndDeleteBtns'}>
                           <Flex gap={'1'}>
                             <IconButton
+                              colorScheme={'yellow'}
                               onClick={() => handleEdit(car.id)}
                               aria-label={'Edit'}
                               icon={<EditIcon />} />
                             <IconButton
+                              colorScheme={'red'}
                               onClick={() => handleDelete(car.id)}
                               aria-label={'Delete'}
                               icon={<DeleteIcon />}
